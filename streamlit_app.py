@@ -2,6 +2,7 @@ import streamlit as st
 import pickle
 import pandas as pd
 import sklearn
+from datetime import datetime
 
 pkl_filename = "pickle_model.pkl"
 st.header("AI-Driven Mental Health Risk Assmt. Webapp")
@@ -13,13 +14,10 @@ with open(pkl_filename, 'rb') as file:
 
 # with col1:
     with st.form('Form1'):
-#        add timestamp____________________________
-
-        
-        age = st.slider(label='1.What is your age?', min_value=18, max_value=100, key=0)
-
+        Time = datetime.now()
+        age = st.slider(label='What is your age?', min_value=18, max_value=72)
         gender_options = ['Male', 'Female', 'Transgender/Non Binary']
-        gender = st.radio("2.Gender ", gender_options, index=0)
+        gender = st.radio("Gender ", gender_options, index=0)
         gender_index = gender_options.index(gender)
         
         country_options = [
@@ -39,7 +37,7 @@ with open(pkl_filename, 'rb') as file:
         employment_index = employment_options.index(employment)
 
         family_history_options = ['No', 'Yes']
-        family_history = st.radio('Do you have a family history of mental illness?', family_history_options, index=family_history_options.index('No'))
+        family_history = st.radio('Do you have a family history of mental illness?', family_history_options, index=family_history_options.index('No'), key = 93)
         family_history_index = family_history_options.index(family_history)
 
         employees_options = ['1-5', '100-500', '26-100', '500-1000', '6-25', 'More than 1000']
@@ -95,27 +93,27 @@ with open(pkl_filename, 'rb') as file:
         observed_neg_conseq_index = observed_neg_conseq_options.index(observed_neg_conseq)
 
         family_history_options = ['No', 'Yes']
-        family_history = st.radio('3.Do you have a family history of mental illness?', family_history_options, index=0)
+        family_history = st.radio('Do you have a family history of mental illness?', family_history_options, index=0)
         family_history_index = family_history_options.index(family_history)
 
         benefits_options = ['Do not know', 'No', 'Yes']
-        benefits = st.radio('4.Does your employer provide mental health benefits?', benefits_options, index=0)
+        benefits = st.radio('Does your employer provide mental health benefits?', benefits_options, index=0)
         benefits_index = benefits_options.index(benefits)
 
         care_options = ['No', 'Not sure', 'Yes']
-        care = st.radio('5.Do you know the options for mental health care your employer provides?', care_options, index=0)
+        care = st.radio('Do you know the options for mental health care your employer provides?', care_options, index=0)
         care_options_index = care_options.index(care)
 
         anonymity_options = ['Do not know', 'No', 'Yes']
-        anonymity = st.radio('6.Is your anonymity protected if you choose to take advantage of mental health or substance abuse treatment resources?', anonymity_options, index=0)
+        anonymity = st.radio('Is your anonymity protected if you choose to take advantage of mental health or substance abuse treatment resources?', anonymity_options, index=0)
         anonymity_index = anonymity_options.index(anonymity)
 
         leave_options = ['Do not know', 'Somewhat Difficult','Somewhat Easy', 'Very difficult', 'Very easy']
-        leave = st.radio('7.How easy is it for you to take medical leave for a mental health condition?', leave_options, index=0)
+        leave = st.radio('How easy is it for you to take medical leave for a mental health condition?', leave_options, index=0)
         leave_index = leave_options.index(leave)
 
         work_interfere_options = ["Don't know", 'Never', 'Often', 'Rarely', 'Sometimes']
-        work_interfere = st.radio('8.If you have a mental health condition, do you feel that it interferes with your work?', work_interfere_options, index=0)
+        work_interfere = st.radio('If you have a mental health condition, do you feel that it interferes with your work?', work_interfere_options, index=0)
         work_interfere_index = work_interfere_options.index(work_interfere)
 
         comment = st.text_input("Comments/Concerns")
@@ -124,6 +122,7 @@ with open(pkl_filename, 'rb') as file:
 
         if submitted:
             X_temp = {
+                'Time':[Time],
                 'Age': [age],
                 "Gender": [gender],
                 "Country": [country],
